@@ -10,20 +10,20 @@ namespace Fifo_Lifo.Source.Repositories;
 
 public class TasksRepository : ITasksRepository
 {
-    public TaskList TaskList { get; set; }
+    public TaskStack TaskStack { get; set; }
 
-    public TasksRepository(TaskList? list = null)
+    public TasksRepository(TaskStack? stack = null)
     {
-        if (list != null)
+        if (stack != null)
         {
-            TaskList = list;
+            TaskStack = stack;
             return;
         }
 
-        TaskList = new TaskList();
+        TaskStack = new TaskStack();
     }
 
-    public TaskList InsertTask(string owner, string task)
+    public TaskStack InsertTask(string owner, string task)
     {
         try
         {
@@ -32,9 +32,9 @@ public class TasksRepository : ITasksRepository
                 throw new ArgumentNullException(nameof(task));
             }
 
-            TaskList.Tasks.Add(new Domain.Task(owner, task));
+            TaskStack.Tasks.Push(new Domain.Task(owner, task));
 
-            return TaskList;
+            return TaskStack;
         }
         catch (Exception ex)
         {
@@ -42,17 +42,17 @@ public class TasksRepository : ITasksRepository
         }
     }
 
-    public TaskList RemoveTask()
+    public TaskStack RemoveTask()
     {
         try
         {
-            if (TaskList.Tasks.Count > 0)
+            if (TaskStack.Tasks.Count > 0)
             {
-                TaskList.Tasks.RemoveAt(TaskList.Tasks.Count - 1);
+                TaskStack.Tasks.Pop();
 
             }
 
-            return TaskList;
+            return TaskStack;
         }
         catch (Exception ex)
         {
@@ -64,9 +64,9 @@ public class TasksRepository : ITasksRepository
     {
         try
         {
-            if(TaskList.Tasks.Count > 0)
+            if(TaskStack.Tasks.Count > 0)
             {
-                return $"{TaskList.Tasks[TaskList.Tasks.Count - 1].Owner} - {TaskList.Tasks[TaskList.Tasks.Count - 1].TaskName}";
+                return $"{TaskStack.Tasks.Peek().Owner} - {TaskStack.Tasks.Peek().TaskName}";
             }
             return "There's no tasks";
         }

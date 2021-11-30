@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Fifo_Lifo.Source.Domain;
 
-public class TaskList
+public class TaskStack
 {
-    public List<Task> Tasks { get; set; }
+    public Stack<Task> Tasks { get; set; }
 
-    public TaskList ()
+    public TaskStack ()
     {
-        Tasks = new List<Task> ();
+        Tasks = new Stack<Task> ();
     }
 }

@@ -4,7 +4,7 @@ namespace Fifo_Lifo.Source.Interfaces;
 
 public interface ITasksRepository
 {
-    public TaskList InsertTask(string owner, string task);
-    public TaskList RemoveTask();
+    public TaskStack InsertTask(string owner, string task);
+    public TaskStack RemoveTask();
     public string ReturnNextTask();
 }
