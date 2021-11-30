@@ -9,11 +9,15 @@ namespace Fifo_Lifo.Source.Domain;
 public class Task
 {
     private string _taskName;
-    public string TaskName { get { return _taskName; } set { _taskName = value; } }
+    private string _owner;
 
-    public Task (string task)
+    public string TaskName { get { return _taskName; } set { _taskName = value; } }
+    public string Owner { get { return _owner; } set { _owner = value; } }
+
+    public Task(string owner, string task)
     {
         _taskName = task;
+        _owner = owner;
     }
 }
 

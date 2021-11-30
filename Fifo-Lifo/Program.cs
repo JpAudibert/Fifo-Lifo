@@ -7,12 +7,10 @@ bool switchOn = true;
 while (switchOn)
 {
     Console.WriteLine(@"
-
     ---- Task List ----
     [1] - Show my next task;
     [2] - Create Task;
-    [3] - Create Task List;
-    [4] - Switch off
+    [3] - Switch off
     ");
 
     string option = null;
@@ -26,16 +24,17 @@ while (switchOn)
     switch (option)
     {
         case "1":
-            Console.WriteLine("Type the Owner's ID");
-            int id = Console.Read();
+            Console.WriteLine(taskRepository.ReturnNextTask());
+            taskRepository.RemoveTask();
             break;
         case "2":
-            Console.WriteLine(option);
+            Console.WriteLine("Type the owner's name:");
+            string owner = Console.ReadLine();
+            Console.WriteLine("Type the task:");
+            string task = Console.ReadLine();
+            taskRepository.InsertTask(owner, task);
             break;
         case "3":
-            Console.WriteLine(option);
-            break;
-        case "4":
             Console.WriteLine("Switching off");
             switchOn = false;
             break;

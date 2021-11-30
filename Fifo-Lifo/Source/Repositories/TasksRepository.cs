@@ -10,63 +10,65 @@ namespace Fifo_Lifo.Source.Repositories;
 
 public class TasksRepository : ITasksRepository
 {
-    public List<TaskList> Lists { get; set; }
+    public TaskList TaskList { get; set; }
 
-    public TasksRepository(List<TaskList>? lists = null)
+    public TasksRepository(TaskList? list = null)
     {
-        if (lists != null)
+        if (list != null)
         {
-            Lists = lists;
+            TaskList = list;
             return;
         }
 
-        Lists = new List<TaskList>();
+        TaskList = new TaskList();
     }
 
-    public TaskList InsertTask(Owner owner, string task)
+    public TaskList InsertTask(string owner, string task)
     {
         try
         {
-            TaskList TaskList = (TaskList)Lists.Where(list => list.Owner.Id == owner.Id);
-
-            TaskList.Tasks.Add(new Domain.Task(task));
-
-            return TaskList;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-    public TaskList RemoveTask(Owner owner)
-    {
-        try
-        {
-            TaskList TaskList = (TaskList)Lists.Where(list => list.Owner.Id == owner.Id);
-
-            TaskList.Tasks.RemoveAt(TaskList.Tasks.Count - 1);
-
-            return TaskList;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-    public string ReturnNextTask(Owner owner)
-    {
-        try
-        {
-            TaskList TaskList = (TaskList)Lists.Where(list => list.Owner.Id == owner.Id);
-
-            if (TaskList == null)
+            if (task == null || owner == null)
             {
-                return "You don't have tasks";
+                throw new ArgumentNullException(nameof(task));
             }
 
-            return $"{owner.Name} - {TaskList.Tasks[TaskList.Tasks.Count - 1].TaskName}";
+            TaskList.Tasks.Add(new Domain.Task(owner, task));
+
+            return TaskList;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+    public TaskList RemoveTask()
+    {
+        try
+        {
+            if (TaskList.Tasks.Count > 0)
+            {
+                TaskList.Tasks.RemoveAt(TaskList.Tasks.Count - 1);
+
+            }
+
+            return TaskList;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+    public string ReturnNextTask()
+    {
+        try
+        {
+            if(TaskList.Tasks.Count > 0)
+            {
+                return $"{TaskList.Tasks[TaskList.Tasks.Count - 1].Owner} - {TaskList.Tasks[TaskList.Tasks.Count - 1].TaskName}";
+            }
+            return "There's no tasks";
         }
         catch (Exception ex)
         {

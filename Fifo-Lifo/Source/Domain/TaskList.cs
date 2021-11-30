@@ -8,12 +8,10 @@ namespace Fifo_Lifo.Source.Domain;
 
 public class TaskList
 {
-    public Owner Owner { get; set; }
     public List<Task> Tasks { get; set; }
 
-    public TaskList (Owner owner)
+    public TaskList ()
     {
-        Owner = owner;
         Tasks = new List<Task> ();
     }
 }
