@@ -1,2 +1,2 @@
 # Fifo-Lifo
-A college application for a pile and a queue implementation
+A college application for a stack and a queue implementation
